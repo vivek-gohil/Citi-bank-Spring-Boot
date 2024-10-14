@@ -55,17 +55,35 @@ public class EmployeeCRUDControllerV2 {
 	// Create endpoint for Update employee
 	// http://localhost:8080/crudapi/employee - HTTP Method = Put
 	@PutMapping("employee")
-	public boolean updateEmployee(@RequestBody Employee employee) {
+	public ResponseEntity<ResponseDto> updateEmployee(@RequestBody Employee employee) {
 		boolean result = employeeService.updateEmployee(employee);
-		return result;
+		ResponseDto responseDto = new ResponseDto();
+		if (result) {
+			responseDto.setStatusCode("200");
+			responseDto.setStatusMessage("Employee updated successfully");
+			return ResponseEntity.status(HttpStatus.OK).body(responseDto);
+		} else {
+			responseDto.setStatusCode("500");
+			responseDto.setStatusMessage("Failed to update employee");
+			return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).body(responseDto);
+		}
 	}
 
 	// Create endpoint for Delete employee
 	// http://localhost:8080/crudapi/employee/{employeeId} - HTTP Method = Delete
 	@DeleteMapping("employee/{employeeId}")
-	public boolean deleteEmployeeByEmployeeId(@PathVariable int employeeId) {
+	public ResponseEntity<ResponseDto> deleteEmployeeByEmployeeId(@PathVariable int employeeId) {
 		boolean result = employeeService.deleteEmployee(employeeId);
-		return result;
+		ResponseDto responseDto = new ResponseDto();
+		if (result) {
+			responseDto.setStatusCode("200");
+			responseDto.setStatusMessage("Employee deleted successfully");
+			return ResponseEntity.status(HttpStatus.OK).body(responseDto);
+		} else {
+			responseDto.setStatusCode("500");
+			responseDto.setStatusMessage("Failed to delete employee");
+			return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).body(responseDto);
+		}
 	}
 
 }

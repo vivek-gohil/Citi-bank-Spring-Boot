@@ -9,6 +9,7 @@ import org.springframework.stereotype.Component;
 import org.springframework.stereotype.Service;
 
 import com.citibank.main.domain.Employee;
+import com.citibank.main.exception.EmployeeNotFoundException;
 import com.citibank.main.repository.EmployeeRepository;
 
 //Every employee has a address
@@ -31,7 +32,10 @@ public class EmployeeService {
 	public Employee getEmployeeByEmployeeId(int employeeId) {
 		LOGGER.info("getEmployeeByEmployeeId() of Service called");
 		Employee employee = employeeRepository.getEmployeeByEmployeeId(employeeId);
-		return employee;
+		if (employee != null)
+			return employee;
+		else
+			throw new EmployeeNotFoundException("No employee found with given employeeId = " + employeeId);
 	}
 
 	// Add New Employee
