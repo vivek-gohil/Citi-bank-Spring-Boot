@@ -18,6 +18,8 @@ import com.citibank.main.domain.Employee;
 import com.citibank.main.dto.ResponseDto;
 import com.citibank.main.service.EmployeeService;
 
+import jakarta.validation.Valid;
+
 //EmployeeCRUDControllerV2 has a EmployeeService
 @RestController
 @RequestMapping("crudapi/v2")
@@ -39,7 +41,7 @@ public class EmployeeCRUDControllerV2 {
 
 	// Create endpoint for Add new employee
 	@PostMapping("employee")
-	public ResponseEntity<ResponseDto> addNewEmployee(@RequestBody Employee employee) {
+	public ResponseEntity<ResponseDto> addNewEmployee(@Valid @RequestBody Employee employee) {
 		boolean result = employeeService.addNewEmployee(employee);
 		ResponseDto responseDto = new ResponseDto();
 		if (result) {
